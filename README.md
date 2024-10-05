@@ -7,8 +7,7 @@
 1. A Linux System (validated on Ubuntu 22.04).
 2. [Docker](https://docs.docker.com/engine/install/ubuntu/) (validated with 27.3.1).
 3. [Python](https://github.com/pyenv/pyenv) (**requires** 3.10 or higher).
-4. `pip` (usually installed with Python).
-5. `git`.
+4. `git`, `pip`, `venv` (`sudo apt install -y git python3-pip python3-venv`).
 
 ### System Configuration
 
@@ -23,7 +22,9 @@ First you will want to download the ICS-QUARTZ repository to run the experiments
 ```bash
 git clone https://github.com/corbanvilla/icsquartz-ndss2025.git icsquartz
 cd ./icsquartz
-pip3 install -r requirements.txt
+python3 -m venv ./venv # Creates a virtual environment
+source ./venv/bin/activate # Activates the virtual Python environment
+pip install -r requirements.txt
 ```
 
 ## Experiments
