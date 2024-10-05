@@ -1,0 +1,6 @@
+**/*.deb
+__pycache__/
+.icsquartz-logs/
+.icsquartz-results/
+results/
+venv/
