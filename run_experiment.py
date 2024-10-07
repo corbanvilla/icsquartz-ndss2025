@@ -13,6 +13,7 @@ from loguru import logger as log
 from scripts.experiments import table_3, table_4, table_5, cve
 from scripts.fuzzers import ICSQuartz
 
+results_dir = 'results'
 
 def fuzz_targets(benchmarks: list, compiler: str, scan_cycle: bool, asan_alternate: bool, build_only: bool, fuzz_trials: int, fuzz_time: int, fuzzers: list):
     all_stats = []
@@ -77,7 +78,6 @@ def fuzz_targets(benchmarks: list, compiler: str, scan_cycle: bool, asan_alterna
         fuzzer.cleanup()
 
     # 7 - Statistical Analysis
-    results_dir = 'results'
     results_timestamp = int(time.time())
     os.makedirs(results_dir, exist_ok=True)
 
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     parser.add_argument('--fuzz-time', type=int, default=30, help='Time for fuzzing in seconds')
     parser.add_argument('--fuzz-trials', type=int, default=3, help='Number of fuzzing trials (per benchmark)')
     parser.add_argument('--cpus', type=str, default='1-59', help='Range of CPUs to use at once (e.g., 1-59).')
-    parser.add_argument('--experiment', type=str, choices=['table_3', 'table_4', 'table_5', 'cve'], required=True, help='The experiment set to run.')
+    parser.add_argument('--experiment', type=str, choices=['table_3', 'table_4', 'table_5', 'cve', 'build-all'], required=True, help='The experiment set to run.')
     parser.add_argument('--cpus-isolated', action='store_true', help='Whether these CPUs have been isolated by the kernel scheduler.')
     parser.add_argument('--build-only', action='store_true', help='Build images but do not fuzz.')
     args = parser.parse_args()
@@ -134,22 +134,44 @@ if __name__ == '__main__':
     concurrent_fuzzers = len(cpus)
 
     # Select the benchmark and compiler to use
+    benchmark_configs = []
+    build_only = args.build_only
     match args.experiment:
         case 'table_3':
-            config = table_3
+            benchmark_configs.append(table_3)
         case 'table_4':
-            config = table_4
+            benchmark_configs.append(table_4)
         case 'table_5':
-            config = table_5
+            benchmark_configs.append(table_5)
         case 'cve':
-            config = cve
+            benchmark_configs.append(cve)
+        case 'build-all':
+            build_only = True
+            benchmark_configs.extend([table_3, table_4, table_5, cve])
 
-    compiler = config["compiler"]
-    benchmarks = config["benchmarks"]
-    scan_cycle = config["scan_cycle"]
-    asan_alternate = config["asan_alternate"]
-
+    # Run benchmark configs
     fuzzers = [ICSQuartz]
+    for config in benchmark_configs:
+        compiler = config["compiler"]
+        benchmarks = config["benchmarks"]
+        scan_cycle = config["scan_cycle"]
+        asan_alternate = config["asan_alternate"]
+        results = config["results"]
+        results_columns = config["results_columns"]
 
-    # Fuzz
-    fuzz_targets(benchmarks, compiler, scan_cycle, asan_alternate, args.build_only, args.fuzz_trials, args.fuzz_time, fuzzers)
+        # Fuzz
+        fuzz_targets(benchmarks, compiler, scan_cycle, asan_alternate, build_only, args.fuzz_trials, args.fuzz_time, fuzzers)
+
+        # Print key results
+        if not build_only:
+            for result in results:
+                df = pd.read_csv(os.path.join(results_dir, result))
+                columns = []
+                if 'fuzzer' in df.columns:
+                    columns.append('fuzzer')
+                if 'benchmark' in df.columns:
+                    columns.append('benchmark')
+                columns += results_columns
+
+                print(f'--------- {result} ---------')
+                print(df[columns].to_string(index=False))

@@ -21,7 +21,9 @@ table_3 = {
         'icsfuzz_oob_2_1',
         'icsfuzz_oob_2_5',
         'icsfuzz_oob_2_13',
-    ]
+    ],
+    "results": ["latest-per-benchmark.csv", "latest-overall.csv"],
+    "results_columns": ["execs_per_sec", "first_crash_time", "first_crash_executions"],
 }
 
 table_4 = {
@@ -48,6 +50,8 @@ table_4 = {
         "oscat_basic_upper_case",
         "oscat_basic_weekday_to_string",
     ],
+    "results": ["latest-all.csv"],
+    "results_columns": ["first_crash_time", "first_crash_executions"],
 }
 
 
@@ -63,6 +67,8 @@ table_5 = {
         "icspatch_anaerobic_oobr_2",
         "icspatch_anaerobic_oobw_1",
     ],
+    "results": ["latest-all.csv"],
+    "results_columns": ["first_crash_executions", "state_resets"],
 }
 
 cve = {
@@ -72,4 +78,6 @@ cve = {
     "benchmarks": [
         'oscat_basic_month_to_string',
     ],
+    "results": ["latest-all.csv"],
+    "results_columns": ["first_crash_time", "first_crash_executions", "execs_total"],
 }

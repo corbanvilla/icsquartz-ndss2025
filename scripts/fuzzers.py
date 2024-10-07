@@ -302,5 +302,5 @@ class ICSQuartz(Fuzzer):
             'execs_total': execs_total,
             'first_crash_time': first_crash_time,
             'first_crash_executions': first_crash_executions,
-            'state_rests': state_resets if self.scan_cycle is True else 0,
+            'state_resets': state_resets if self.scan_cycle is True else 0,
         }
