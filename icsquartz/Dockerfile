@@ -30,7 +30,7 @@ RUN set -ex &&\
 # Setup LibAFL
 ENV LIBAFL_VERSION="7c95afc42fd5e418a6efad3f39122bb915c0a10c"
 RUN git config --global http.postBuffer 524288000 && \
-    git config --global http.postBuffer 157286400
+    git config --global http.version HTTP/1.1
 RUN git clone https://github.com/AFLplusplus/LibAFL.git /LibAFL && \
     cd /LibAFL && \
     git checkout ${LIBAFL_VERSION}
