@@ -28,10 +28,13 @@ RUN set -ex &&\
     apt-get install -y clang-${LLVM_VERSION} lldb-${LLVM_VERSION} lld-${LLVM_VERSION} clangd-${LLVM_VERSION} clang-tidy-${LLVM_VERSION} clang-format-${LLVM_VERSION} clang-tools-${LLVM_VERSION} llvm-${LLVM_VERSION}-dev lld-${LLVM_VERSION} lldb-${LLVM_VERSION} llvm-${LLVM_VERSION}-tools libomp-${LLVM_VERSION}-dev libc++-${LLVM_VERSION}-dev libc++abi-${LLVM_VERSION}-dev libclang-common-${LLVM_VERSION}-dev libclang-${LLVM_VERSION}-dev libclang-cpp${LLVM_VERSION}-dev libunwind-${LLVM_VERSION}-dev libclang-rt-${LLVM_VERSION}-dev libpolly-${LLVM_VERSION}-dev
 
 # Setup LibAFL
+WORKDIR /tmp
 ENV LIBAFL_VERSION="7c95afc42fd5e418a6efad3f39122bb915c0a10c"
-ADD https://github.com/AFLplusplus/LibAFL.git /LibAFL
+RUN wget https://github.com/AFLplusplus/LibAFL/archive/${LIBAFL_VERSION}.zip && \
+    unzip ${LIBAFL_VERSION}.zip && \
+    mv LibAFL-${LIBAFL_VERSION} /LibAFL && \
+    rm -f ${LIBAFL_VERSION}.zip
 WORKDIR /LibAFL
-RUN git checkout ${LIBAFL_VERSION}
 
 # Setup ICS-QUARTZ
 COPY ./Cargo.toml /icsquartz/Cargo.toml
