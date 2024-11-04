@@ -328,6 +328,13 @@ if __name__ == "__main__":
 
         case "build-all":
             dry_run = True
+
+            table_3_part_1["fuzzers"] = [ICSQuartzASANAlternative]
+            table_3_part_2["fuzzers"] = [ICSQuartz]
+            table_4["fuzzers"] = [ICSQuartzScanCycleMutators, AFLPlusPlus, FieldFuzz, ICSFuzz]
+            table_7_oscat_basic["fuzzers"] = [ICSQuartz, FieldFuzz, ICSFuzz]
+            table_7_oscat_network["fuzzers"] = [ICSQuartz]
+            cve["fuzzers"] = [ICSQuartz, FieldFuzz, ICSFuzz]
             benchmark_configs.extend([table_3_part_1, table_3_part_2, table_4, table_5, table_7_oscat_basic, table_7_oscat_network, cve])
 
     # Run benchmark configs
@@ -556,4 +563,3 @@ if __name__ == "__main__":
                     showindex=False,
                 )
             )
-            
