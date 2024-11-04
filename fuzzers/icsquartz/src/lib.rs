@@ -7,6 +7,7 @@ use std::{default, env, net::SocketAddr, path::PathBuf};
 
 use asan_feedback::AsanFeedback;
 use clap::{self, Parser};
+use crash_time_feedback::CrashTimeFeedback;
 use libafl::{
     corpus::{InMemoryCorpus, InMemoryOnDiskCorpus},
     events::{launcher::Launcher, EventConfig},
@@ -38,6 +39,7 @@ use mimalloc::MiMalloc;
 extern crate libc;
 
 pub mod asan_feedback;
+pub mod crash_time_feedback;
 #[cfg(feature = "scan_cycle")]
 pub mod scan_cycle;
 
@@ -282,6 +284,9 @@ pub extern "C" fn libafl_main() {
         // Track coverage
         let mut feedback = MaxMapFeedback::new(&edges_observer);
 
+        // Add crash time metadata to each report
+        let mut feedback = feedback_or!(feedback, CrashTimeFeedback::new());
+
         // Annotate scan cycles on corpus
         #[cfg(feature = "scan_cycle")]
         let mut feedback = feedback_or!(
@@ -310,6 +315,8 @@ pub extern "C" fn libafl_main() {
             // Take it only if trigger new coverage over crashes
             // Uses `with_name` to create a different history from the `MaxMapFeedback` in `feedback` above
             MaxMapFeedback::with_name("mapfeedback_metadata_objective", &edges_observer),
+            // Annotate crashes with time to find
+            feedback_not!(CrashTimeFeedback::new())
         );
 
         // Annotate scan cycles on solutions

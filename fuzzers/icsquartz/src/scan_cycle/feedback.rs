@@ -20,7 +20,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, SerdeAny, Serialize, Deserialize)]
 pub struct ScanCycleMetadata {
     pub scan_cycles: usize,
-    pub time_to_find: Duration,
+    // pub time_to_find: Duration,
 }
 
 /// Records the number of scan cycles for a given testcase.
@@ -54,11 +54,11 @@ where
         _observers: &OT,
         testcase: &mut Testcase<S::Input>,
     ) -> Result<(), Error> {
-        let now = current_time();
-        let start = state.start_time();
+        // let now = current_time();
+        // let start = state.start_time();
         testcase.add_metadata(ScanCycleMetadata {
             scan_cycles: unsafe { scan_cycle },
-            time_to_find: now - *start,
+            // time_to_find: now - *start,
         });
         Ok(())
     }

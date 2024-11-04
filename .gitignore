@@ -1,6 +1,9 @@
 **/*.deb
-__pycache__/
-.icsquartz-logs/
-.icsquartz-results/
+fuzzbench/
+**/__pycache__/
+.logs/
+.results/
+.cache/
 results/
 venv/
+results-old/
