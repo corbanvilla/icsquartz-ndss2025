@@ -332,6 +332,7 @@ if __name__ == "__main__":
             table_3_part_1["fuzzers"] = [ICSQuartzASANAlternative]
             table_3_part_2["fuzzers"] = [ICSQuartz]
             table_4["fuzzers"] = [ICSQuartzScanCycleMutators, AFLPlusPlus, FieldFuzz, ICSFuzz]
+            table_5["fuzzers"] = [ICSQuartzScanCycleMutators, ICSQuartzScanCycleAware]
             table_7_oscat_basic["fuzzers"] = [ICSQuartz, FieldFuzz, ICSFuzz]
             table_7_oscat_network["fuzzers"] = [ICSQuartz]
             cve["fuzzers"] = [ICSQuartz, FieldFuzz, ICSFuzz]
