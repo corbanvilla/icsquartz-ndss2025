@@ -20,6 +20,15 @@ extern "C"
     size_t PLC_PRG_struct_size = PLC_PRG_instance_size;
 }
 
+int check_ascii(const unsigned char *buffer, size_t Size) {
+    for (size_t i = 0; i < Size; i++) {
+        if (buffer[i] > 0x7F) {
+            return 0; // Non-ASCII character found
+        }
+    }
+    return 1; // All characters are ASCII
+}
+
 extern "C" int LLVMFuzzerTestOneInput(uint8_t *Data, size_t Size)
 {
     struct PLC_PRG_struct PLC_PRG_fuzzer_instance;
@@ -31,7 +40,7 @@ extern "C" int LLVMFuzzerTestOneInput(uint8_t *Data, size_t Size)
     if (Size == 0)
         return 0;
 
-    if (Size <= PLC_PRG_struct_size) {
+    if (Size <= PLC_PRG_struct_size && check_ascii(Data, Size)) {
         // Return 0 for all empty input
         for (size_t i = 0; i < Size; i++) {
             if (Data[i] != 0)

@@ -576,7 +576,7 @@ END_FUNCTION_BLOCK
 
 (*#-#-#-#-#-#-#-#-#-#---Declaration---#-#-#-#-#-#-#-#-#-#-#-#-#*)
 
-PROGRAM XMLParser_DEMO
+PROGRAM PLC_PRG
 VAR
     BUF : NW_BUF_LONG;
     XML_READER: XML_READER;

@@ -70,15 +70,9 @@ struct XMLParser_DEMO_struct
 
 extern "C"
 {
-    void XMLParser_DEMO(struct XMLParser_DEMO_struct *);
-    extern struct XMLParser_DEMO_struct XMLParser_DEMO_instance;
-}
-
-extern "C"
-{
-    void PLC_PRG(struct PLC_PRG_struct *);
-    extern struct PLC_PRG_struct PLC_PRG_instance;
-    size_t PLC_PRG_instance_size = sizeof(struct PLC_PRG_struct);
+    void PLC_PRG(struct XMLParser_DEMO_struct *);
+    extern struct XMLParser_DEMO_struct PLC_PRG_instance;
+    size_t PLC_PRG_instance_size = sizeof(struct XMLParser_DEMO_struct);
     size_t PLC_PRG_input_size = PLC_PRG_instance_size;
     size_t PLC_PRG_struct_size = PLC_PRG_instance_size;
 }
@@ -92,7 +86,7 @@ struct XMLParser_DEMO_struct XMLParser_DEMO_fuzzer_instance;
 extern "C" int LLVMFuzzerTestOneInput(uint8_t *Data, size_t Size)
 {
     /* Fresh copy of default values every run */
-    memcpy(&XMLParser_DEMO_fuzzer_instance, &XMLParser_DEMO_instance, sizeof(struct XMLParser_DEMO_struct));
+    memcpy(&XMLParser_DEMO_fuzzer_instance, &PLC_PRG_instance, sizeof(struct XMLParser_DEMO_struct));
 
     /* Temporary, until ST has a while loop */
     if (Size < 4095)
@@ -110,7 +104,7 @@ extern "C" int LLVMFuzzerTestOneInput(uint8_t *Data, size_t Size)
         /* Invoke the ST program */
         while (1)
         {
-            XMLParser_DEMO(&XMLParser_DEMO_fuzzer_instance);
+            PLC_PRG(&XMLParser_DEMO_fuzzer_instance);
             if (XMLParser_DEMO_fuzzer_instance.ctrl.TYP == 99)
                 break;
             // printf("Type: %d\n", XMLParser_DEMO_fuzzer_instance.ctrl.TYP);

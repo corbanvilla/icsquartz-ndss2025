@@ -1,6 +1,6 @@
 (*#-#-#-#-#-#-#-#-#-#---Declaration---#-#-#-#-#-#-#-#-#-#-#-#-#*)
 
-PROGRAM BASE64_DEMO
+PROGRAM PLC_PRG
 VAR
 	text1: STRING(144);
 	text2: STRING(192);

@@ -50,15 +50,9 @@ struct BASE64_DEMO_struct {
 
 extern "C"
 {
-    void BASE64_DEMO(struct BASE64_DEMO_struct *);
-    extern struct BASE64_DEMO_struct BASE64_DEMO_instance;
-}
-
-extern "C"
-{
-    void PLC_PRG(struct PLC_PRG_struct *);
-    extern struct PLC_PRG_struct PLC_PRG_instance;
-    size_t PLC_PRG_instance_size = sizeof(struct BASE64_DEMO_fuzzer_instance);
+    extern void PLC_PRG(struct BASE64_DEMO_struct *);
+    extern struct BASE64_DEMO_struct PLC_PRG_instance;
+    size_t PLC_PRG_instance_size = sizeof(struct BASE64_DEMO_struct);
     size_t PLC_PRG_input_size = PLC_PRG_instance_size;
     size_t PLC_PRG_struct_size = PLC_PRG_instance_size;
 }
@@ -71,58 +65,12 @@ struct BASE64_DEMO_struct BASE64_DEMO_fuzzer_instance;
 extern "C" int LLVMFuzzerTestOneInput(uint8_t *Data, size_t Size)
 {
     /* Fresh copy of default values every run */
-    memcpy(&BASE64_DEMO_fuzzer_instance, &BASE64_DEMO_instance, sizeof(struct BASE64_DEMO_struct));
+    memcpy(&BASE64_DEMO_fuzzer_instance, &PLC_PRG_instance, sizeof(struct BASE64_DEMO_struct));
 
     // Disallow empty inputs
     if (Size == 0)
         return 0;
 
-    // Allow calling with inputs of size N, which will be looped through
-    // to look for state bugs
-    int iterations = ROUND_UP(Size, 144);
-
-    for (int i = 0; i < iterations; i++) {
-        /* Calculate where to copy into the data array */
-        uint8_t* data_ptr = Data + (i * 144);
-        uint8_t data_size = 144; 
-        if (i+1 == iterations) {
-            data_size = Size % (144+1);
-        }
-
-        /* Copy in fuzzer values to local struct */
-        memcpy(BASE64_DEMO_fuzzer_instance.text1, data_ptr, data_size);
-        /* Null-terminate fuzzer input */
-        BASE64_DEMO_fuzzer_instance.text1[data_size] = '\0';
-
-        /* Call multiple times to fish for state bugs */
-        for (int i = 0; i < 3; i++) {
-            /* Invoke the ST program */
-            BASE64_DEMO(&BASE64_DEMO_fuzzer_instance);
-        }
-
-        /* Reset just enough state to allow it to run again */
-        /* Maximizes the chances of finding bugs in state reset */
-        BASE64_DEMO_fuzzer_instance.start = 1;
-        BASE64_DEMO_fuzzer_instance.BASE64_ENCODE_STR.t5 = 0;
-    }
-    // #endif
-
-    #ifdef RUN_ONE_CYCLE
-    if (Size <= 144) {
-        /* Copy in fuzzer values to local struct */
-        memcpy(BASE64_DEMO_fuzzer_instance.text1, Data, MIN(144,Size));
-        /* Null-terminate fuzzer input */
-        BASE64_DEMO_fuzzer_instance.text1[Size] = '\0';
-
-        /* Call multiple times to fish for state bugs */
-        for (int i = 0; i < 3; i++) {
-            /* Invoke the ST program */
-            BASE64_DEMO(&BASE64_DEMO_fuzzer_instance);
-        }
-    }
-    #endif
-
-    #ifdef RUN_ONCE
     if (Size <= 144) {
         // Fuzz once (reset state every time)
         /* Copy in default values to local struct */
@@ -130,9 +78,8 @@ extern "C" int LLVMFuzzerTestOneInput(uint8_t *Data, size_t Size)
         /* Null-terminate fuzzer input */
         BASE64_DEMO_fuzzer_instance.text1[Size] = '\0';
         /* Invoke the ST program */
-        BASE64_DEMO(&BASE64_DEMO_fuzzer_instance);
+        PLC_PRG(&BASE64_DEMO_fuzzer_instance);
     }
-    #endif
     
     return 0;
 }
