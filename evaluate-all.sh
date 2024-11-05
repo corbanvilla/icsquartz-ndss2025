@@ -30,14 +30,14 @@ echo "============================" >> all-results.txt
 echo "============================" >> all-results.txt
 echo "CVE" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials  --cpus 1-6 --experiment cve >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment cve >> all-results.txt
 
 echo "============================" >> all-results.txt
 echo "Table IV" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 3 --cpus 1-6 --experiment table_4 >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment table_4 >> all-results.txt
 
 echo "============================" >> all-results.txt
 echo "Table V" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 3 --cpus 1-6 --experiment table_5 >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment table_5 >> all-results.txt
