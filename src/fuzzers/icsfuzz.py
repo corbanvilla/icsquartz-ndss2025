@@ -3,6 +3,7 @@ import shutil
 
 from loguru import logger as log
 
+from src.config import CODESYS_AREA_ZERO
 from src.containers import (
     copy_from_container,
 )
@@ -20,6 +21,7 @@ class ICSFuzz(BaseFuzzer):
     fuzzer_caps = ["SYS_NICE", "SYS_PTRACE"]
     codesys_based = True
     scan_cycle_ms = 35  # 15 ms~matches the approximate speed in ICSFuzz
+    codesys_area_zero = CODESYS_AREA_ZERO
     benchmark_build_args = {"SCAN_CYCLE_MS": scan_cycle_ms}
 
     async def get_fuzzer_stats(self, exist=False):

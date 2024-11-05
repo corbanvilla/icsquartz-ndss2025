@@ -49,6 +49,7 @@ class BaseFuzzer:
     build_benchmarks = True
     plc_compiler_version = None
     codesys_based = False  # TODO - change this to an enum and match on it
+    codesys_area_zero = None
 
     # ICS-QUARTZ Fuzzers (TODO - refactor these out!)
     scan_cycle_aware = False
@@ -99,6 +100,7 @@ class BaseFuzzer:
         build_args = {
             "SCAN_CYCLE": 0 if self.scan_cycle_aware is False else 1,
             "ASAN_ALT": 0 if self.asan_alternate is False else 1,
+            "CODESYS_AREA_ZERO": self.codesys_area_zero if self.codesys_area_zero else 0,
         }
         build_args |= self.benchmark_build_args
         contexts = self.__get_build_contexts(benchmark_name, compiler_version)

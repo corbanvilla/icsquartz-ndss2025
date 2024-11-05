@@ -16,6 +16,10 @@ if [ -f harness.env ]; then
     source harness.env
 fi
 
+# Use $TARGET_OFFSET to calculate the target address (add to $CODESYS_AREA_ZERO)
+# Result in hex
+TARGET_ADDR=$(printf "0x%X\n" $((CODESYS_AREA_ZERO + TARGET_OFFSET)))
+
 # Start CODESYS
 /bin/bash /start.sh &
 CODESYS_PID=$!

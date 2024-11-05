@@ -23,6 +23,7 @@ RUN wget --output-document=codesys.package $CODESYS_DOWNLOAD && \
 # Setup preconfigured config.
 COPY ./configs/CODESYSControl.cfg /etc/CODESYSControl.cfg
 COPY ./configs/CODESYSControl_User.cfg /etc/CODESYSControl_User.cfg
+COPY locate-area-zero.sh /locate-area-zero.sh
 
 ENV CODESYS_HOME=/var/opt/codesys/
 ENV CODESYS_LOG=/wrapper.log

@@ -4,6 +4,7 @@ fuzzbench/
 .logs/
 .results/
 .cache/
+.config/
 results/
 venv/
 results-old/

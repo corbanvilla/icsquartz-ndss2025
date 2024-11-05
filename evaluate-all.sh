@@ -20,24 +20,24 @@ fi
 echo "============================" >> all-results.txt
 echo "Table III" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment table_3 >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-8 --experiment table_3 >> all-results.txt
 
 echo "============================" >> all-results.txt
 echo "Table VII" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment table_7 >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-8 --experiment table_7 >> all-results.txt
 
 echo "============================" >> all-results.txt
 echo "CVE" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment cve >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-8 --experiment cve >> all-results.txt
 
 echo "============================" >> all-results.txt
 echo "Table IV" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment table_4 >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-8 --experiment table_4 >> all-results.txt
 
 echo "============================" >> all-results.txt
 echo "Table V" >> all-results.txt
 echo "============================" >> all-results.txt
-./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-6 --experiment table_5 >> all-results.txt
+./run_experiment.py --fuzz-time 60 --fuzz-trials 1 --cpus 1-8 --experiment table_5 >> all-results.txt

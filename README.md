@@ -24,6 +24,11 @@ echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 > This configuration will not persist across reboots. To re-enable ASLR, replace `0` with `2` or reboot your system.
 > 
 
+Calibrate the CODESYS virtual PLC to your system's specific configuration for ICSFuzz and FieldFuzz: `./scripts/calibrate-codesys.sh`.
+>
+> Ensure ASLR is disabled before running the calibration script. This must be run once per system and will store the respective details under `.config/codesys-area-zero`.
+>
+
 ### ICS-QUARTZ
 
 First you will want to download the ICS-QUARTZ repository to run the experiments. Install the requires Python packages as well:
