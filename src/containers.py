@@ -15,7 +15,7 @@ async def start_container(
     log.info(f"Running {image_name} container")
     try:
         # Base run command
-        command = ["docker", "run", "-d"]
+        command = ["docker", "run", "-d", "--restart", "unless-stopped"]
 
         # CPUSet:
         if cpuset:
