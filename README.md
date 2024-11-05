@@ -60,6 +60,9 @@ Invoking the experiment script will automatically:
 5. Collect and aggregate statistics into `results/`.
 6. The time required for the build stages will vary, and may take significantly longer for the first experiment as dependencies are downloaded and built in the containers.
 ​
+### Run All Experiments (E1-E5)
+You may run all 5 experiments by running: `./evaluate-all.sh`. The script will place results in `all-results.txt`, which can be interpreted using the experiment descriptions below.
+
 ### Experiment (E1)
 **[Performance] | [Table III] | [10 human-minutes + 1.5 compute-hour]**
 
@@ -113,7 +116,7 @@ The results demonstrate how ICS-QUARTZ is able to locate vulnerabilities that ca
 In this experiment, we reproduce the ICS-QUARTZ mutation strategy evaluation.
 
 ```bash
-./run_experiment.py \ --fuzz-time 80 --fuzz-trials 3 \ --cpus 1-8 --experiment table_5
+./run_experiment.py --fuzz-time 80 --fuzz-trials 3 --cpus 1-8 --experiment table_5
 ```
 
 The `state_resets` metric indicates the number of times the scan cycle mutation algorithm intervened to reset stale execution paths. The higher number of `first_crash_executions` in these benchmarks reflects the stateful complexity introduced by ST programs tracking residual states.

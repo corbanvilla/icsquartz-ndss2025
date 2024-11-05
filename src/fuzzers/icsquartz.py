@@ -154,8 +154,10 @@ class ICSQuartz(BaseFuzzer):
             executions = stats["executions"]
 
             # calc time to find by execs_per_sec * executions
-            time_to_find = executions / execs_per_sec
-
+            if execs_per_sec == 0:
+                time_to_find = None
+            else:
+                time_to_find = executions / execs_per_sec
 
             crash_stats.append({"exec_time": time_to_find, "executions": executions})
 
@@ -233,4 +235,3 @@ class ICSQuartzASANAlternative(ICSQuartz):
         Returns the context for the fuzzer
         """
         return os.path.join(self.fuzzers_dir, super().fuzzer_name)
-

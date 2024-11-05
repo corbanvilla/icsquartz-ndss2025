@@ -7,3 +7,4 @@ fuzzbench/
 results/
 venv/
 results-old/
+all-results.txt
