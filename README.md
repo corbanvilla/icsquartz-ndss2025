@@ -1,5 +1,7 @@
 # ICS-QUARTZ Artifact Evaluation
 
+
+
 ## Prerequisites
 
 ### Dependencies
@@ -125,3 +127,20 @@ In this experiment, we reproduce the ICS-QUARTZ mutation strategy evaluation.
 ```
 
 The `state_resets` metric indicates the number of times the scan cycle mutation algorithm intervened to reset stale execution paths. The higher number of `first_crash_executions` in these benchmarks reflects the stateful complexity introduced by ST programs tracking residual states.
+
+## License
+
+This project is licensed under the [CC BY-NC-SA 4.0 License](LICENSE).
+
+## Cite us
+
+Corban Villa, Constantine Doumanidis, Hithem Lamri, Prashant Hari Narayan Rajput and Michail Maniatakos, "ICS-QUARTZ: Scan Cycle-Aware and Vendor-Agnostic Fuzzing for Industrial Control Systems" Network and Distributed System Security (NDSS) Symposium, 2025.
+
+```
+@INPROCEEDINGS{psi2025ndss,
+  author    = {Villa, Corban and Doumanidis, Constantine and Lamri, Hithem and Rajput, Prashant Hari Narayan and Maniatakos, Michail},
+  booktitle = {Network and Distributed System Security (NDSS) Symposium},
+  title     = {ICS-QUARTZ: Scan Cycle-Aware and Vendor-Agnostic Fuzzing for Industrial Control Systems},
+  year={2025}
+}
+```
